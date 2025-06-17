@@ -3,6 +3,7 @@ import { lazy, Suspense, useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Header from './components/Header/Header';
 import { useDispatch } from 'react-redux';
+
 import { fetchBaseCurrency } from './redux/operations';
 
 const HomePage = lazy(() => import('./pages/Home'));
@@ -19,9 +20,7 @@ export const App = () => {
     };
 
     function success(pos) {
-      const { latitude, longitude } = pos.coords;
-
-      dispatch(fetchBaseCurrency({ latitude, longitude }));
+      dispatch(fetchBaseCurrency(pos.coords));
     }
 
     function error(err) {
