@@ -1,9 +1,11 @@
 import Section from '../components/Section/Section';
 import Container from '../components/Container/Container';
 import Heading from '../components/Heading/Heading';
+import ExchangeForm from '../components/ExchangeForm/ExchangeForm';
 
 const Home = () => {
   const isError = false;
+  ExchangeForm;
 
   return (
     <Section>
@@ -16,6 +18,7 @@ const Home = () => {
             title="Something went wrong...😐 Check the data validity and try again!"
           />
         )}
+        <ExchangeForm></ExchangeForm>
       </Container>
     </Section>
   );
