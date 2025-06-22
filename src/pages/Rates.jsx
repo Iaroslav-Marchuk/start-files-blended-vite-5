@@ -7,10 +7,12 @@ import {
   selectIsError,
   selectIsLoading,
   selectRates,
+  selectValueFilter,
 } from '../redux/selectors';
 import { useEffect } from 'react';
 import { fetchActualRates } from '../redux/operations';
 import RatesList from '../components/RatesList/RatesList';
+import Filter from '../components/Filter/Filter';
 
 const Rates = () => {
   const baseCurrency = useSelector(selectBaseCurrency);
@@ -18,19 +20,24 @@ const Rates = () => {
   const isLoading = useSelector(selectIsLoading);
   const rates = useSelector(selectRates);
 
+  const filter = useSelector(selectValueFilter);
+
   const filteredRates = rates
-    .filter(([key]) => key !== baseCurrency)
+    .filter(
+      ([key]) => key !== baseCurrency && key.toLowerCase().includes(filter),
+    )
     .map(([key, value]) => ({ key, value: (1 / value).toFixed(2) }));
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchActualRates());
-  }, [dispatch]);
+  }, [dispatch, baseCurrency]);
 
   return (
     <Section>
       <Container>
+        <Filter />
         {!isLoading && rates.length > 0 && <RatesList rates={filteredRates} />}
         {isError && (
           <Heading
